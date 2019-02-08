@@ -1,8 +1,9 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'spec_helper'
 
-describe PuppetLint::Lexer do # rubocop:disable Metrics/BlockLength
+describe PuppetLint::Lexer do
   before do
     @lexer = PuppetLint::Lexer.new
   end
@@ -26,7 +27,7 @@ describe PuppetLint::Lexer do # rubocop:disable Metrics/BlockLength
     end
 
     it 'should get correct line number after a multi line comment' do
-      @lexer.new_token(:MLCOMMENT, "test\ntest", :raw => "/*test\ntest*/")
+      @lexer.new_token(:MLCOMMENT, "test\ntest", raw: "/*test\ntest*/")
       token = @lexer.new_token(:TEST, 'test')
       expect(token.line).to eq(2)
     end
@@ -1342,15 +1343,15 @@ END
     it 'should not include DOS line endings in the comment value' do
       tokens = @lexer.tokenise("foo # bar baz\r\n")
 
-      expect(tokens[2]).to have_attributes(:type => :COMMENT, :value => ' bar baz')
-      expect(tokens[3]).to have_attributes(:type => :NEWLINE, :value => "\r\n")
+      expect(tokens[2]).to have_attributes(type: :COMMENT, value: ' bar baz')
+      expect(tokens[3]).to have_attributes(type: :NEWLINE, value: "\r\n")
     end
 
     it 'should not include Unix line endings in the comment value' do
       tokens = @lexer.tokenise("foo # bar baz\n")
 
-      expect(tokens[2]).to have_attributes(:type => :COMMENT, :value => ' bar baz')
-      expect(tokens[3]).to have_attributes(:type => :NEWLINE, :value => "\n")
+      expect(tokens[2]).to have_attributes(type: :COMMENT, value: ' bar baz')
+      expect(tokens[3]).to have_attributes(type: :NEWLINE, value: "\n")
     end
   end
 
@@ -1378,15 +1379,15 @@ END
     it 'should not include DOS line endings in the comment value' do
       tokens = @lexer.tokenise("foo // bar baz\r\n")
 
-      expect(tokens[2]).to have_attributes(:type => :SLASH_COMMENT, :value => ' bar baz')
-      expect(tokens[3]).to have_attributes(:type => :NEWLINE, :value => "\r\n")
+      expect(tokens[2]).to have_attributes(type: :SLASH_COMMENT, value: ' bar baz')
+      expect(tokens[3]).to have_attributes(type: :NEWLINE, value: "\r\n")
     end
 
     it 'should not include Unix line endings in the comment value' do
       tokens = @lexer.tokenise("foo // bar baz\n")
 
-      expect(tokens[2]).to have_attributes(:type => :SLASH_COMMENT, :value => ' bar baz')
-      expect(tokens[3]).to have_attributes(:type => :NEWLINE, :value => "\n")
+      expect(tokens[2]).to have_attributes(type: :SLASH_COMMENT, value: ' bar baz')
+      expect(tokens[3]).to have_attributes(type: :NEWLINE, value: "\n")
     end
   end
 
@@ -1553,7 +1554,7 @@ END
       expect(token.value).to eq("\t")
     end
 
-    it 'should parse unicode spaces', :unless => RUBY_VERSION == '1.8.7' do
+    it 'should parse unicode spaces', unless: RUBY_VERSION == '1.8.7' do
       token = @lexer.tokenise("\xc2\xa0").first
       expect(token.type).to eq(:WHITESPACE)
       expect(token.value).to eq("\xc2\xa0")

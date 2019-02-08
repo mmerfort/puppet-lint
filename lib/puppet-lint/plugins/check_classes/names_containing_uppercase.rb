@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Find and warn about module names with illegal uppercase characters.
 #
 # https://puppet.com/docs/puppet/latest/modules_fundamentals.html#allowed-module-names
@@ -5,7 +7,7 @@
 PuppetLint.new_check(:names_containing_uppercase) do
   def check
     (class_indexes + defined_type_indexes).each do |class_idx|
-      next unless class_idx[:name_token].value =~ %r{[A-Z]}
+      next unless class_idx[:name_token].value.match?(%r{[A-Z]})
 
       obj_type = if class_idx[:type] == :CLASS
                    'class'
@@ -15,10 +17,10 @@ PuppetLint.new_check(:names_containing_uppercase) do
 
       notify(
         :error,
-        :message => "#{obj_type} '#{class_idx[:name_token].value}' contains illegal uppercase",
-        :line    => class_idx[:name_token].line,
-        :column  => class_idx[:name_token].column,
-        :token   => class_idx[:name_token]
+        message: "#{obj_type} '#{class_idx[:name_token].value}' contains illegal uppercase",
+        line: class_idx[:name_token].line,
+        column: class_idx[:name_token].column,
+        token: class_idx[:name_token]
       )
     end
   end

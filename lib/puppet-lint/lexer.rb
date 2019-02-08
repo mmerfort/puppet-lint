@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'pp'
 require 'strscan'
@@ -32,7 +33,7 @@ class PuppetLint
 
   # Internal: The puppet-lint lexer. Converts your manifest into its tokenised
   # form.
-  class Lexer # rubocop:disable Metrics/ClassLength
+  class Lexer
     def initialize
       @line_no = 1
       @column = 1
@@ -89,16 +90,16 @@ class PuppetLint
     # Internal: A Hash whose keys are Symbols representing token types which
     # a regular expression can follow.
     REGEX_PREV_TOKENS = {
-      :NODE    => true,
-      :LBRACE  => true,
-      :RBRACE  => true,
-      :MATCH   => true,
-      :NOMATCH => true,
-      :COMMA   => true,
-      :LBRACK  => true,
-      :IF      => true,
-      :ELSIF   => true,
-      :LPAREN  => true,
+      NODE: true,
+      LBRACE: true,
+      RBRACE: true,
+      MATCH: true,
+      NOMATCH: true,
+      COMMA: true,
+      LBRACK: true,
+      IF: true,
+      ELSIF: true,
+      LPAREN: true,
     }.freeze
 
     # Internal: An Array of Arrays containing tokens that can be described by
@@ -106,8 +107,37 @@ class PuppetLint
     # name of the token as a Symbol and a regular expression describing the
     # value of the token.
     NAME_RE = %r{\A(((::)?[_a-z0-9][-\w]*)(::[a-z0-9][-\w]*)*)}
+    token_types = %w[
+      Integer
+      Float
+      Boolean
+      Regexp
+      String
+      Array
+      Hash
+      Resource
+      Class
+      Collection
+      Scalar
+      Numeric
+      CatalogEntry
+      Data
+      Tuple
+      Struct
+      Optional
+      NotUndef
+      Variant
+      Enum
+      Pattern
+      Any
+      Callable
+      Type
+      Runtime
+      Undef
+      Default
+    ]
     KNOWN_TOKENS = [
-      [:TYPE, %r{\A(Integer|Float|Boolean|Regexp|String|Array|Hash|Resource|Class|Collection|Scalar|Numeric|CatalogEntry|Data|Tuple|Struct|Optional|NotUndef|Variant|Enum|Pattern|Any|Callable|Type|Runtime|Undef|Default)\b}],
+      [:TYPE, %r{\A(#{token_types.join('|')})\b}],
       [:CLASSREF, %r{\A(((::){0,1}[A-Z][-\w]*)+)}],
       [:NUMBER, %r{\A\b((?:0[xX][0-9A-Fa-f]+|0?\d+(?:\.\d+)?(?:[eE]-?\d+)?))\b}],
       [:FUNCTION_NAME, %r{#{NAME_RE}\(}],
@@ -158,12 +188,12 @@ class PuppetLint
     # are considered to be formatting tokens (i.e. tokens that don't contain
     # code).
     FORMATTING_TOKENS = {
-      :WHITESPACE    => true,
-      :NEWLINE       => true,
-      :COMMENT       => true,
-      :MLCOMMENT     => true,
-      :SLASH_COMMENT => true,
-      :INDENT        => true,
+      WHITESPACE: true,
+      NEWLINE: true,
+      COMMENT: true,
+      MLCOMMENT: true,
+      SLASH_COMMENT: true,
+      INDENT: true,
     }.freeze
 
     # \t == tab
@@ -217,7 +247,7 @@ class PuppetLint
           length = var_name.size + 1
           tokens << new_token(:VARIABLE, var_name)
 
-        elsif chunk =~ %r{\A'.*?'}m
+        elsif chunk.match?(%r{\A'.*?'}m)
           str_content = StringScanner.new(code[i + 1..-1]).scan_until(%r{(\A|[^\\])(\\\\)*'}m)
           length = str_content.size + 1
           tokens << new_token(:SSTRING, str_content[0..-2])
@@ -249,7 +279,7 @@ class PuppetLint
           mlcomment.sub!(%r{\A/\* ?}, '')
           mlcomment.sub!(%r{ ?\*/\Z}, '')
           mlcomment.gsub!(%r{^ *\*}, '')
-          tokens << new_token(:MLCOMMENT, mlcomment, :raw => mlcomment_raw)
+          tokens << new_token(:MLCOMMENT, mlcomment, raw: mlcomment_raw)
 
         elsif chunk.match(%r{\A/.*?/}) && possible_regex?
           str_content = StringScanner.new(code[i + 1..-1]).scan_until(%r{(\A|[^\\])(\\\\)*/}m)
@@ -435,32 +465,32 @@ class PuppetLint
       until value.nil?
         if terminator == '"'
           if first
-            tokens << new_token(:STRING, value, :line => line, :column => column)
+            tokens << new_token(:STRING, value, line: line, column: column)
             first = false
           else
             token_column = column + (ss.pos - value.size)
-            tokens << new_token(:DQPOST, value, :line => line, :column => token_column)
+            tokens << new_token(:DQPOST, value, line: line, column: token_column)
             line += value.scan(LINE_END_RE).size
             @column = column + ss.pos + 1
             @line_no = line
           end
         else
           if first
-            tokens << new_token(:DQPRE, value, :line => line, :column => column)
+            tokens << new_token(:DQPRE, value, line: line, column: column)
             first = false
           else
             token_column = column + (ss.pos - value.size)
-            tokens << new_token(:DQMID, value, :line => line, :column => token_column)
+            tokens << new_token(:DQMID, value, line: line, column: token_column)
             line += value.scan(LINE_END_RE).size
           end
           if ss.scan(%r{\{}).nil?
             var_name = ss.scan(%r{(::)?(\w+(-\w+)*::)*\w+(-\w+)*})
             if var_name.nil?
               token_column = column + ss.pos - 1
-              tokens << new_token(:DQMID, '$', :line => line, :column => token_column)
+              tokens << new_token(:DQMID, '$', line: line, column: token_column)
             else
               token_column = column + (ss.pos - var_name.size)
-              tokens << new_token(:UNENC_VARIABLE, var_name, :line => line, :column => token_column)
+              tokens << new_token(:UNENC_VARIABLE, var_name, line: line, column: token_column)
             end
           else
             line += value.scan(LINE_END_RE).size
@@ -474,7 +504,7 @@ class PuppetLint
             lexer.tokens.each do |token|
               tok_col = column + token.column + (ss.pos - contents.size - 1)
               tok_line = token.line + line - 1
-              tokens << new_token(token.type, token.value, :line => tok_line, :column => tok_col)
+              tokens << new_token(token.type, token.value, line: tok_line, column: tok_col)
             end
             if lexer.tokens.length == 1 && lexer.tokens[0].type == :VARIABLE
               tokens.last.raw = raw
@@ -498,12 +528,12 @@ class PuppetLint
       interpolate = name.start_with?('"')
       value, terminator = get_heredoc_segment(ss, eos_text, interpolate)
       until value.nil?
-        if terminator =~ %r{\A\|?\s*-?\s*#{Regexp.escape(eos_text)}}
+        if terminator.match?(%r{\A\|?\s*-?\s*#{Regexp.escape(eos_text)}})
           if first
-            tokens << new_token(:HEREDOC, value, :raw => "#{value}#{terminator}")
+            tokens << new_token(:HEREDOC, value, raw: "#{value}#{terminator}")
             first = false
           else
-            tokens << new_token(:HEREDOC_POST, value, :raw => "#{value}#{terminator}")
+            tokens << new_token(:HEREDOC_POST, value, raw: "#{value}#{terminator}")
           end
         else
           if first

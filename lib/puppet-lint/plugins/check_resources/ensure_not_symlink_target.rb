@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Check the tokens of each File resource instance for an ensure
 # parameter and record a warning if the value of that parameter looks like
 # a symlink target (starts with a '/').
@@ -8,19 +10,18 @@ PuppetLint.new_check(:ensure_not_symlink_target) do
     resource_indexes.each do |resource|
       next unless resource[:type].value == 'file'
 
-      resource[:param_tokens].select { |param_token|
-        param_token.value == 'ensure'
-      }.each do |ensure_token|
+      resource[:param_tokens].each do |param_token|
+        next unless param_token.value == 'ensure'
         value_token = ensure_token.next_code_token.next_code_token
         next unless value_token.value.start_with?('/')
 
         notify(
           :warning,
-          :message     => 'symlink target specified in ensure attr',
-          :line        => value_token.line,
-          :column      => value_token.column,
-          :param_token => ensure_token,
-          :value_token => value_token
+          message: 'symlink target specified in ensure attr',
+          line: value_token.line,
+          column: value_token.column,
+          param_token: ensure_token,
+          value_token: value_token
         )
       end
     end

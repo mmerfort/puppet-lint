@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'optparse'
 
 # Public: Contains the puppet-lint option parser so that it can be used easily
 # in multiple places.
 class PuppetLint::OptParser
-  HELP_TEXT = <<-EOF.freeze
+  HELP_TEXT = <<-EOF
     puppet-lint
 
     Basic Command Line Usage:
@@ -48,7 +50,7 @@ class PuppetLint::OptParser
 
       opts.on(
         '--error-level LEVEL',
-        [:all, :warning, :error],
+        %i[all warning error],
         'The level of error to return (warning, error or all).'
       ) do |el|
         PuppetLint.configuration.error_level = el

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Check the manifest tokens for any arrows (=>) in a grouping ({}) that
 # are not aligned with other arrows in that grouping.
 #
@@ -72,13 +74,13 @@ PuppetLint.new_check(:arrow_alignment) do
               arrows_on_line = level_tokens[level_idx].select { |t| t.line == arrow_tok.line }
               notify(
                 :warning,
-                :message        => "indentation of => is not properly aligned (expected in column #{arrow_column[level_idx]}, but found it in column #{arrow_tok.column})",
-                :line           => arrow_tok.line,
-                :column         => arrow_tok.column,
-                :token          => arrow_tok,
-                :arrow_column   => arrow_column[level_idx],
-                :newline        => arrows_on_line.index(arrow_tok) != 0,
-                :newline_indent => param_column[level_idx] - 1
+                message: "indentation of => is not properly aligned (expected in column #{arrow_column[level_idx]}, but found it in column #{arrow_tok.column})",
+                line: arrow_tok.line,
+                column: arrow_tok.column,
+                token: arrow_tok,
+                arrow_column: arrow_column[level_idx],
+                newline: arrows_on_line.index(arrow_tok) != 0,
+                newline_indent: param_column[level_idx] - 1
               )
             end
           end
@@ -103,7 +105,7 @@ PuppetLint.new_check(:arrow_alignment) do
       problem[:token].prev_code_token.prev_token.value = ' ' * problem[:newline_indent]
 
       end_param_idx = tokens.index(problem[:token].prev_code_token)
-      start_param_idx = tokens.index(problem[:token].prev_token_of([:INDENT, :NEWLINE]))
+      start_param_idx = tokens.index(problem[:token].prev_token_of(%i[INDENT NEWLINE]))
       param_length = tokens[start_param_idx..end_param_idx].map { |r| r.to_manifest.length }.reduce(0) { |sum, x| sum + x } + 1
       new_ws_len = problem[:arrow_column] - param_length
     else
@@ -115,7 +117,7 @@ PuppetLint.new_check(:arrow_alignment) do
       new_ws_len += (problem[:arrow_column] - problem[:token].column)
     end
 
-    raise PuppetLint::NoFix if new_ws_len < 0
+    raise PuppetLint::NoFix if new_ws_len.negative?
     new_ws = ' ' * new_ws_len
 
     if problem[:token].prev_token.type == :WHITESPACE

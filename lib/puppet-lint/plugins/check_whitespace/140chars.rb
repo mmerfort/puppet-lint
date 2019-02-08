@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Test the raw manifest string for lines containing more than 140
 # characters and record a warning for each instance found.  The only exceptions
 # to this rule are lines containing URLs and template() calls which would hurt
@@ -12,9 +14,9 @@ PuppetLint.new_check(:'140chars') do
 
       notify(
         :warning,
-        :message => 'line has more than 140 characters',
-        :line    => idx + 1,
-        :column  => 140
+        message: 'line has more than 140 characters',
+        line: idx + 1,
+        column: 140
       )
     end
   end

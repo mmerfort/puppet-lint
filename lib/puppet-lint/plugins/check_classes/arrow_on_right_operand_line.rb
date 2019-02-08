@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Test the manifest tokens for chaining arrow that is
 # on the line of the left operand when the right operand is on another line.
 #
@@ -9,10 +11,10 @@ PuppetLint.new_check(:arrow_on_right_operand_line) do
 
       notify(
         :warning,
-        :message => "arrow should be on the right operand's line",
-        :line    => token.line,
-        :column  => token.column,
-        :token   => token
+        message: "arrow should be on the right operand's line",
+        line: token.line,
+        column: token.column,
+        token: token
       )
     end
   end
@@ -34,6 +36,6 @@ PuppetLint.new_check(:arrow_on_right_operand_line) do
     # Remove trailing whitespace after left operand (if it exists)
     return unless left_operand_token.next_token.type == :WHITESPACE
     trailing_whitespace_token = left_operand_token.next_token
-    remove_token(trailing_whitespace_token) if [:NEWLINE, :WHITESPACE].include?(trailing_whitespace_token.next_token.type)
+    remove_token(trailing_whitespace_token) if %i[NEWLINE WHITESPACE].include?(trailing_whitespace_token.next_token.type)
   end
 end

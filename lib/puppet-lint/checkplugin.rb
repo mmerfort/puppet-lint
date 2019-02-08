@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: A class that contains and provides information for the puppet-lint
 # checks.
 #
@@ -147,10 +149,10 @@ class PuppetLint::CheckPlugin
   # Returns a Hash of default problem information.
   def default_info
     @default_info ||= {
-      :check      => self.class.const_get('NAME'),
-      :fullpath   => fullpath,
-      :path       => path,
-      :filename   => filename,
+      check: self.class.const_get('NAME'),
+      fullpath: fullpath,
+      path: path,
+      filename: filename,
     }
   end
 
@@ -168,11 +170,11 @@ class PuppetLint::CheckPlugin
     problem[:kind] = kind
     problem.merge!(default_info) { |_key, v1, _v2| v1 }
 
-    unless [:warning, :error, :fixed].include?(kind)
+    unless %i[warning error fixed].include?(kind)
       raise ArgumentError, 'unknown value passed for kind'
     end
 
-    [:message, :line, :column, :check].each do |attr|
+    %i[message line column check].each do |attr|
       unless problem.key?(attr)
         raise ArgumentError, "problem hash must contain #{attr.inspect}"
       end

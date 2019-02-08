@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'rspec/mocks'
 require 'optparse'
@@ -68,7 +70,7 @@ describe PuppetLint::Bin do
     end
   end
 
-  context 'when passed a backslash separated path on Windows', :if => Gem.win_platform? do
+  context 'when passed a backslash separated path on Windows', if: Gem.win_platform? do
     let(:args) do
       [
         'spec\fixtures\test\manifests',

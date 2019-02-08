@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-lint/optparser'
 
 # Internal: The logic of the puppet-lint bin script, contained in a class for

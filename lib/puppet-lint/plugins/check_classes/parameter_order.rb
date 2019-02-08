@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Test the manifest tokens for any parameterised classes or defined
 # types that take parameters and record a warning if there are any optional
 # parameters listed before required parameters.
@@ -30,9 +32,9 @@ PuppetLint.new_check(:parameter_order) do
         msg = 'optional parameter listed before required parameter'
         notify(
           :warning,
-          :message => msg,
-          :line    => token.line,
-          :column  => token.column
+          message: msg,
+          line: token.line,
+          column: token.column
         )
       end
     end
@@ -41,10 +43,10 @@ PuppetLint.new_check(:parameter_order) do
   def required_parameter?(token)
     return false unless token.type == :VARIABLE
 
-    data_type = token.prev_token_of(:TYPE, :skip_blocks => true)
+    data_type = token.prev_token_of(:TYPE, skip_blocks: true)
     return false if data_type && data_type.value == 'Optional'
 
-    if token.next_code_token.nil? || [:COMMA, :RPAREN].include?(token.next_code_token.type)
+    if token.next_code_token.nil? || %i[COMMA RPAREN].include?(token.next_code_token.type)
       return !(token.prev_code_token && token.prev_code_token.type == :EQUALS)
     end
 

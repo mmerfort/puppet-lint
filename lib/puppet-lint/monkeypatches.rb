@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 begin
-  '%{test}' % { :test => 'replaced' } == 'replaced' # rubocop:disable Style/FormatString
+  '%{test}' % { test: 'replaced' } == 'replaced' # rubocop:disable Style/FormatString
 rescue
   # monkeypatch String#% into Ruby 1.8.7
   class String

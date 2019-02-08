@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Check the raw manifest string for lines containing hard tab
 # characters and record an error for each instance found.
 #
@@ -6,15 +8,15 @@ PuppetLint.new_check(:hard_tabs) do
   WHITESPACE_TYPES = Set[:INDENT, :WHITESPACE]
 
   def check
-    tokens.select { |r|
-      WHITESPACE_TYPES.include?(r.type) && r.value.include?("\t")
-    }.each do |token|
+    tokens.each do |token|
+      next unless WHITESPACE_TYPES.include?(token.type) &&
+                  token.value.include?("\t")
       notify(
         :error,
-        :message => 'tab character found',
-        :line    => token.line,
-        :column  => token.column,
-        :token   => token
+        message: 'tab character found',
+        line: token.line,
+        column: token.column,
+        token: token
       )
     end
   end

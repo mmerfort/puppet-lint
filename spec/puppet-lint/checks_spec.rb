@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe PuppetLint::Checks do
@@ -7,7 +9,7 @@ describe PuppetLint::Checks do
   let(:content) { "notify { 'test': }" }
 
   describe '#initialize' do
-    it { is_expected.to have_attributes(:problems => []) }
+    it { is_expected.to have_attributes(problems: []) }
   end
 
   describe '#load_data' do
@@ -33,14 +35,14 @@ describe PuppetLint::Checks do
         it 'creates a syntax error problem for the file' do
           expect(instance.problems).to have(1).problem
           expect(instance.problems.first).to include(
-            :kind     => :error,
-            :check    => :syntax,
-            :message  => 'Syntax error',
-            :line     => 1,
-            :column   => 2,
-            :path     => anything,
-            :fullpath => anything,
-            :filename => anything
+            kind: :error,
+            check: :syntax,
+            message: 'Syntax error',
+            line: 1,
+            column: 2,
+            path: anything,
+            fullpath: anything,
+            filename: anything
           )
         end
       end
@@ -55,14 +57,14 @@ describe PuppetLint::Checks do
         it 'creates a syntax error problem for the file' do
           expect(instance.problems).to have(1).problem
           expect(instance.problems.first).to include(
-            :kind     => :error,
-            :check    => :syntax,
-            :message  => 'Syntax error (some reason)',
-            :line     => 1,
-            :column   => 2,
-            :path     => anything,
-            :fullpath => anything,
-            :filename => anything
+            kind: :error,
+            check: :syntax,
+            message: 'Syntax error (some reason)',
+            line: 1,
+            column: 2,
+            path: anything,
+            fullpath: anything,
+            filename: anything
           )
         end
       end
@@ -84,7 +86,7 @@ describe PuppetLint::Checks do
     end
 
     context 'when there are checks enabled' do
-      let(:enabled_checks) { [:arrow_alignment, :hard_tabs] }
+      let(:enabled_checks) { %i[arrow_alignment hard_tabs] }
       let(:enabled_check_classes) { enabled_checks.map { |r| PuppetLint.configuration.check_object[r] } }
       let(:disabled_checks) { PuppetLint.configuration.checks - enabled_checks }
       let(:disabled_check_classes) { disabled_checks.map { |r| PuppetLint.configuration.check_object[r] } }
@@ -110,12 +112,12 @@ describe PuppetLint::Checks do
         let(:mock_arrow_alignment) do
           instance_double(
             PuppetLint::CheckPlugin,
-            :run          => [{ :kind => :error, :check => :arrow_alignment }],
-            :fix_problems => [{ :kind => :fixed, :check => :arrow_alignment }]
+            run: [{ kind: :error, check: :arrow_alignment }],
+            fix_problems: [{ kind: :fixed, check: :arrow_alignment }]
           )
         end
         let(:mock_hard_tabs) do
-          instance_double(PuppetLint::CheckPlugin, :run => [], :fix_problems => [])
+          instance_double(PuppetLint::CheckPlugin, run: [], fix_problems: [])
         end
         let(:fix_state) { false }
 
@@ -127,14 +129,14 @@ describe PuppetLint::Checks do
         end
 
         it 'adds the found problems to the problems array' do
-          expect(instance).to have_attributes(:problems => [{ :kind => :error, :check => :arrow_alignment }])
+          expect(instance).to have_attributes(problems: [{ kind: :error, check: :arrow_alignment }])
         end
 
         context 'and fix is enabled' do
           let(:fix_state) { true }
 
           it 'calls #fix_problems on the check and adds the results to the problems array' do
-            expect(instance).to have_attributes(:problems => [{ :kind => :fixed, :check => :arrow_alignment }])
+            expect(instance).to have_attributes(problems: [{ kind: :fixed, check: :arrow_alignment }])
           end
         end
       end
@@ -194,7 +196,7 @@ describe PuppetLint::Checks do
   describe '#enabled_checks' do
     subject(:enabled_checks) { instance.enabled_checks }
 
-    let(:expected_enabled_checks) { [:arrow_alignment, :trailing_whitespace] }
+    let(:expected_enabled_checks) { %i[arrow_alignment trailing_whitespace] }
 
     before do
       PuppetLint.configuration.checks.each do |check|
@@ -212,9 +214,9 @@ describe PuppetLint::Checks do
 
     let(:tokens) do
       [
-        instance_double(PuppetLint::Lexer::Token, :to_manifest => '1'),
-        instance_double(PuppetLint::Lexer::Token, :to_manifest => '2'),
-        instance_double(PuppetLint::Lexer::Token, :to_manifest => '3'),
+        instance_double(PuppetLint::Lexer::Token, to_manifest: '1'),
+        instance_double(PuppetLint::Lexer::Token, to_manifest: '2'),
+        instance_double(PuppetLint::Lexer::Token, to_manifest: '3'),
       ]
     end
 

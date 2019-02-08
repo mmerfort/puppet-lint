@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Check the manifest tokens for double quoted strings that contain
 # a single variable only and record a warning for each instance found.
 #
@@ -25,12 +27,12 @@ PuppetLint.new_check(:only_variable_string) do
             end
             notify(
               :warning,
-              :message     => 'string containing only a variable',
-              :line        => var_token.line,
-              :column      => var_token.column,
-              :start_token => start_token,
-              :var_token   => var_token,
-              :end_token   => eos_token
+              message: 'string containing only a variable',
+              line: var_token.line,
+              column: var_token.column,
+              start_token: start_token,
+              var_token: var_token,
+              end_token: eos_token
             )
           end
           break

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'parser/current'
 
 # Simple rewriter using whitequark/parser that rewrites the "gem 'puppet-lint'"

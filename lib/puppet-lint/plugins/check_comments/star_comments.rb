@@ -1,18 +1,19 @@
+# frozen_string_literal: true
+
 # Public: Check the manifest tokens for any comments encapsulated with
 # slash-asterisks (/* */) and record a warning for each instance found.
 #
 # https://puppet.com/docs/puppet/latest/style_guide.html#comments
 PuppetLint.new_check(:star_comments) do
   def check
-    tokens.select { |token|
-      token.type == :MLCOMMENT
-    }.each do |token|
+    tokens.each do |token|
+      next unless token.type == :MLCOMMENT
       notify(
         :warning,
-        :message => '/* */ comment found',
-        :line    => token.line,
-        :column  => token.column,
-        :token   => token
+        message: '/* */ comment found',
+        line: token.line,
+        column: token.column,
+        token: token
       )
     end
   end

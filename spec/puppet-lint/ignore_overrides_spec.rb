@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-describe 'quoted_booleans', :type => :lint do
+describe 'quoted_booleans', type: :lint do
   let(:msg) { 'quoted boolean value found' }
 
   context 'with a single line ignore' do

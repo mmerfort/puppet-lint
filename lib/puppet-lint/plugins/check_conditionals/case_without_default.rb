@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Test the manifest tokens for any case statements that do not
 # contain a "default" case and record a warning for each instance found.
 #
@@ -17,7 +19,7 @@ PuppetLint.new_check(:case_without_default) do
         elsif tokens[idx].type == :RBRACE
           depth -= 1
           if depth.zero?
-            case_indexes << { :start => token_idx, :end => idx }
+            case_indexes << { start: token_idx, end: idx }
             break
           end
         end
@@ -35,9 +37,9 @@ PuppetLint.new_check(:case_without_default) do
 
       notify(
         :warning,
-        :message => 'case statement without a default case',
-        :line    => case_tokens.first.line,
-        :column  => case_tokens.first.column
+        message: 'case statement without a default case',
+        line: case_tokens.first.line,
+        column: case_tokens.first.column
       )
     end
   end

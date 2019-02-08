@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'set'
 require 'json'
@@ -58,7 +59,7 @@ class PuppetLint
   # Public: Initialise a new PuppetLint object.
   def initialize
     @code = nil
-    @statistics = { :error => 0, :warning => 0, :fixed => 0, :ignored => 0 }
+    @statistics = { error: 0, warning: 0, fixed: 0, ignored: 0 }
     @manifest = ''
   end
 

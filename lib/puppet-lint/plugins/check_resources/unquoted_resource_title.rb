@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Check the manifest tokens for any resource titles / namevars that
 # are not quoted and record a warning for each instance found.
 #
@@ -9,10 +11,10 @@ PuppetLint.new_check(:unquoted_resource_title) do
 
       notify(
         :warning,
-        :message => 'unquoted resource title',
-        :line    => token.line,
-        :column  => token.column,
-        :token   => token
+        message: 'unquoted resource title',
+        line: token.line,
+        column: token.column,
+        token: token
       )
     end
   end

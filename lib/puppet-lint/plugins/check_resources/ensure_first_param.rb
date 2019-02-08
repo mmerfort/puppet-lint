@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Check the tokens of each resource instance for an ensure parameter
 # and if found, check that it is the first parameter listed.  If it is not
 # the first parameter, record a warning.
@@ -17,10 +19,10 @@ PuppetLint.new_check(:ensure_first_param) do
       ensure_token = resource[:param_tokens][ensure_attr_index]
       notify(
         :warning,
-        :message  => "ensure found on line but it's not the first attribute",
-        :line     => ensure_token.line,
-        :column   => ensure_token.column,
-        :resource => resource
+        message: "ensure found on line but it's not the first attribute",
+        line: ensure_token.line,
+        column: ensure_token.column,
+        resource: resource
       )
     end
   end
@@ -28,8 +30,8 @@ PuppetLint.new_check(:ensure_first_param) do
   def fix(problem)
     first_param_name_token = tokens[problem[:resource][:start]].next_token_of(:NAME)
     first_param_comma_token = first_param_name_token.next_token_of(:COMMA)
-    ensure_param_name_token = first_param_comma_token.next_token_of(:NAME, :value => 'ensure')
-    ensure_param_comma_token = ensure_param_name_token.next_token_of([:COMMA, :SEMIC])
+    ensure_param_name_token = first_param_comma_token.next_token_of(:NAME, value: 'ensure')
+    ensure_param_comma_token = ensure_param_name_token.next_token_of(%i[COMMA SEMIC])
 
     if first_param_name_token.nil? || first_param_comma_token.nil? || ensure_param_name_token.nil? || ensure_param_comma_token.nil?
       raise PuppetLint::NoFix

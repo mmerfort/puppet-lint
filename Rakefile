@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rake'
 require 'rspec/core/rake_task'
 require 'puppet-lint'
 require 'puppet-lint/tasks/release_test'
 
-task :default => :test
+task default: :test
 
 RSpec::Core::RakeTask.new(:test)
 
@@ -37,6 +39,6 @@ rescue LoadError
   $stderr.puts 'Rubocop is not available for this version of Ruby.'
 end
 
-task :ci => [:test, :release_test]
+task ci: %i[test release_test]
 
 # vim: syntax=ruby

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Check the manifest tokens for any double or single quoted strings
 # containing only a boolean value and record a warning for each instance
 # found.
@@ -8,15 +10,14 @@ PuppetLint.new_check(:quoted_booleans) do
   BOOLEANS = Set['true', 'false']
 
   def check
-    tokens.select { |r|
-      STRING_TYPES.include?(r.type) && BOOLEANS.include?(r.value)
-    }.each do |token|
+    tokens.each do |token|
+      next unless STRING_TYPES.include?(token.type) && BOOLEANS.include?(token.value)
       notify(
         :warning,
-        :message => 'quoted boolean value found',
-        :line    => token.line,
-        :column  => token.column,
-        :token   => token
+        message: 'quoted boolean value found',
+        line: token.line,
+        column: token.column,
+        token: token
       )
     end
   end

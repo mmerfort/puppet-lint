@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Public: Test the manifest tokens for any classes or defined types that are
 # defined inside another class.
 #
@@ -17,9 +19,9 @@ PuppetLint.new_check(:nested_classes_or_defines) do
 
         notify(
           :warning,
-          :message => "#{type} defined inside a class",
-          :line    => token.line,
-          :column  => token.column
+          message: "#{type} defined inside a class",
+          line: token.line,
+          column: token.column
         )
       end
     end
