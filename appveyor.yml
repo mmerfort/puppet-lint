@@ -1,4 +1,5 @@
-build: off
+---
+build: false
 
 branches:
   only:
