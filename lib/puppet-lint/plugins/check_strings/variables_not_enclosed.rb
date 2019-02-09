@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any variables in a string that have
 # not been enclosed by braces ({}) and record a warning for each instance
 # found.

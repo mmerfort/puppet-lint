@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test the manifest tokens for any variables that are referenced in
 # the manifest.  If the variables are not fully qualified or one of the
 # variables automatically created in the scope, check that they have been

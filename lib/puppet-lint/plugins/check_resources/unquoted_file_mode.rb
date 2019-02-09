@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the tokens of each File resource instance for a mode
 # parameter and if found, record a warning if the value of that parameter is
 # not a quoted string.

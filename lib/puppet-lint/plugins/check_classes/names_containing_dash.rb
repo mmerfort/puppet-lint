@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any classes or defined types that
 # have a dash in their name and record an error for each instance found.
 #

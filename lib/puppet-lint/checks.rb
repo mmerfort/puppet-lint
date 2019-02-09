@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'puppet-lint/checkplugin'
 
 # Internal: Various methods that orchestrate the actions of the puppet-lint

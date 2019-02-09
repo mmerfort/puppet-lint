@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the raw manifest string for lines containing hard tab
 # characters and record an error for each instance found.
 #

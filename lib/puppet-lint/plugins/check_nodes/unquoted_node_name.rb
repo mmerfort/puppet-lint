@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest for unquoted node names and record a warning for
 # each instance found.
 #

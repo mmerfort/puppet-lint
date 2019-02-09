@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any arrows (=>) in a grouping ({}) that
 # are not aligned with other arrows in that grouping.
 #

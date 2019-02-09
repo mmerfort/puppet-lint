@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test the manifest tokens for chaining arrow that is
 # on the line of the left operand when the right operand is on another line.
 #

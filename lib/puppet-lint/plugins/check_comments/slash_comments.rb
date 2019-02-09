@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any comments started with slashes
 # (//) and record a warning for each instance found.
 #

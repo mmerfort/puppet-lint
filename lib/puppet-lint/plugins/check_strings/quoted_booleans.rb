@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any double or single quoted strings
 # containing only a boolean value and record a warning for each instance
 # found.

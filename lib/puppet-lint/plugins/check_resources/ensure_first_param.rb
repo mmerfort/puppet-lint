@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the tokens of each resource instance for an ensure parameter
 # and if found, check that it is the first parameter listed.  If it is not
 # the first parameter, record a warning.

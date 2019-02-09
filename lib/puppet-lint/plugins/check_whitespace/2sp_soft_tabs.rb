@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any indentation not using 2 space soft
 # tabs and record an error for each instance found.
 #

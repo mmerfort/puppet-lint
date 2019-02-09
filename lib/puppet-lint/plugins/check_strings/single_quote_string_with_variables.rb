@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any single quoted strings containing
 # a enclosed variable and record an error for each instance found.
 #

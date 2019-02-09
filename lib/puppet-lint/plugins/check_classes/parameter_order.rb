@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test the manifest tokens for any parameterised classes or defined
 # types that take parameters and record a warning if there are any optional
 # parameters listed before required parameters.

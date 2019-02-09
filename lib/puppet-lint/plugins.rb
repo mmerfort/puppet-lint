@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'pathname'
 
 # Public: Various methods that implement puppet-lint's plugin system

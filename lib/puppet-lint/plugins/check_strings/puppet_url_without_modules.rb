@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any puppet:// URL strings where the
 # path section doesn't start with modules/ and record a warning for each
 # instance found.

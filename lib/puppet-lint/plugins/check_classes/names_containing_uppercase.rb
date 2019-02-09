@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Find and warn about module names with illegal uppercase characters.
 #
 # https://puppet.com/docs/puppet/latest/modules_fundamentals.html#allowed-module-names

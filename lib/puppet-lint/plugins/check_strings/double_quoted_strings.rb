@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any double quoted strings that don't
 # contain any variables or common escape characters and record a warning for
 # each instance found.

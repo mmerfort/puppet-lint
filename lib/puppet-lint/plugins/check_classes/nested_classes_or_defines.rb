@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test the manifest tokens for any classes or defined types that are
 # defined inside another class.
 #

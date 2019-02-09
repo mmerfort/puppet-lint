@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any comments encapsulated with
 # slash-asterisks (/* */) and record a warning for each instance found.
 #

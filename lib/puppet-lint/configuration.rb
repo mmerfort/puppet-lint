@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: A singleton class to store the running configuration of
 # puppet-lint.
 class PuppetLint::Configuration

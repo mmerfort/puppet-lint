@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class PuppetLint::Lexer
   # Public: Stores a fragment of the manifest and the information about its
   # location in the manifest.

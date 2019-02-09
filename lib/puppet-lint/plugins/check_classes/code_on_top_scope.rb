@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test that no code is outside of a class or define scope.
 #
 # No style guide reference

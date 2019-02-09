@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 begin
   '%{test}' % { test: 'replaced' } == 'replaced' # rubocop:disable Style/FormatString
 rescue

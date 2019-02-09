@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: A class that contains and provides information for the puppet-lint
 # checks.
 #

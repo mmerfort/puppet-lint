@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test the manifest tokens for any case statements that do not
 # contain a "default" case and record a warning for each instance found.
 #

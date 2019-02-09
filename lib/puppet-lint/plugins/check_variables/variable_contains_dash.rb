@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test the manifest tokens for variables that contain a dash and
 # record a warning for each instance found.
 #
@@ -8,9 +6,9 @@ PuppetLint.new_check(:variable_contains_dash) do
   VARIABLE_DASH_TYPES = Set[:VARIABLE, :UNENC_VARIABLE]
 
   def check
-    tokens.each do |token|
-      next unless VARIABLE_DASH_TYPES.include?(token.type) ||
-                  token.value.gsub(%r{\[.+?\]}, '').match?(%r{-})
+    tokens.map do |token|
+      next unless VARIABLE_DASH_TYPES.include?(token.type)
+      next unless token.value.gsub(%r{\[.+?\]}, '').match?(%r{-})
 
       notify(
         :warning,

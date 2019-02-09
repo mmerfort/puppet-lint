@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for any class or defined type that does not
 # have a comment directly above it (hopefully, explaining the usage of it) and
 # record a warning for each instance found.

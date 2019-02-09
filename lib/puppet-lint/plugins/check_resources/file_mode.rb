@@ -1,13 +1,11 @@
-# frozen_string_literal: true
-
 # Public: Check the tokens of each File resource instance for a mode
 # parameter and if found, record a warning if the value of that parameter is
 # not a 4 digit octal value (0755) or a symbolic mode ('o=rwx,g+r').
 #
 # https://puppet.com/docs/puppet/latest/style_guide.html#file-modes
 PuppetLint.new_check(:file_mode) do
-  MSG = 'mode should be represented as a 4 digit octal value or symbolic mode'
-  SYM_RE = '([ugoa]*[-=+][-=+rstwxXugo]*)(,[ugoa]*[-=+][-=+rstwxXugo]*)*'
+  MSG = 'mode should be represented as a 4 digit octal value or symbolic mode'.freeze
+  SYM_RE = '([ugoa]*[-=+][-=+rstwxXugo]*)(,[ugoa]*[-=+][-=+rstwxXugo]*)*'.freeze
   IGNORE_TYPES = Set[:VARIABLE, :UNDEF, :FUNCTION_NAME]
   MODE_RE = %r{\A([0-7]{4}|#{SYM_RE})\Z}
 

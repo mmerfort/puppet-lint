@@ -8,7 +8,7 @@ PuppetLint.new_check(:trailing_whitespace) do
   def check
     tokens.each do |token|
       next unless %i[WHITESPACE INDENT].include?(token.type)
-      next if token.next_token.nil? || token.next_token.type == :NEWLINE
+      next unless token.next_token.nil? || token.next_token.type == :NEWLINE
       notify(
         :error,
         message: 'trailing whitespace found',

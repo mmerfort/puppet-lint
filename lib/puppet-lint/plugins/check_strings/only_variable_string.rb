@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the manifest tokens for double quoted strings that contain
 # a single variable only and record a warning for each instance found.
 #

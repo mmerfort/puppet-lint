@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Check the tokens of each resource instance for any duplicate
 # parameters and record a warning for each instance found.
 #

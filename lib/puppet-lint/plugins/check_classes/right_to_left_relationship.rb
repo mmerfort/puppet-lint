@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Public: Test the manifest tokens for any right-to-left (<-) chaining
 # operators and record a warning for each instance found.
 #
